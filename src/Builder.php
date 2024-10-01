@@ -178,10 +178,10 @@ class Builder
      *
      * @return Token
      */
-    public function build(): Token
+    public function build($length = 8): Token
     {
         $tokenData = [
-            'token' => $this->getUniqueId() ?? $this->generateRandomInt(),
+            'token' => $this->getUniqueId() ?? $this->generateRandomInt($length),
             'expired_at' => $this->getExpireDate(),
             'max_usage_limit' => $this->getUsageLimit(),
             'type' => $this->getType(),
@@ -228,24 +228,8 @@ class Builder
      * 
      * @return int
      */
-    private function generateRandomInt($length = 8)
+    private function generateRandomInt($length)
     {
         return random_int(10 ** ($length - 1) + 1, (10 ** $length) - 1);
-    }
-
-    /**
-     * Determine if the tokenable id has any valid token
-     * 
-     * @param $tokenableId
-     * 
-     * @return bool
-     */
-    public function hasValidToken($tokenableId): bool
-    {
-        return Token::where('tokenable_id', $tokenableId)
-                ->get()
-                ->contains(function ($token) {
-                    return $token->isValid();
-                }
     }
 }
