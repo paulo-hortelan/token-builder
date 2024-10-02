@@ -155,4 +155,17 @@ class Token extends Model
                     ->orWhere('expired_at', '>', now());
             });
     }
+
+    /**
+     * Increase minutes to token expiration date
+     *
+     * @return mixed
+     */
+    public function addMinutes($minutes)
+    {
+        $expiresAt = Carbon::parse($this->expired_at);
+        $this->forceFill(['expired_at' => $expiresAt->addMinutes($minutes)])->save();
+
+        return $this;
+    }    
 }
