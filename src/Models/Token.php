@@ -2,6 +2,7 @@
 
 namespace Shetabit\TokenBuilder\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Token extends Model
